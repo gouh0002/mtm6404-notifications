@@ -1,34 +1,33 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { useState } from 'react';
+import data from './notifications.js';
+import NotificationList from "./components/NotificationList";
+import './App.css';
 
+// Main App component
 function App() {
-  const [count, setCount] = useState(0)
+    // State to manage notifications list
+  const [notifications, setNotifications] = useState(data);
+
+  // Function to remove a single notification by ID
+  const clearOneNotification = (id) => {
+    setNotifications(notifications.filter((notification) => notification.id !== id));
+  };
+  // Function to remove all notifications
+  const clearAllNotifications = () => {
+    setNotifications([]);
+  };
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="justify-content-center align-items-center bg-light">
+      <div className="container w-80 justify-content-center">
+        <NotificationList
+          notifications={notifications}
+          onClearOne={clearOneNotification}
+          onClearAll={clearAllNotifications}
+        />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
